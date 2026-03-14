@@ -1,0 +1,19 @@
+# WhatsApp Message OS - Python Dependencies
+
+# GUI Framework
+customtkinter>=5.2.0
+tkinterdnd2>=0.3.0  # Drag & drop support (optional)
+
+# Data Processing
+pandas>=2.0.3
+openpyxl>=3.1.2
+xlrd>=2.0.1  # Support for reading old .xls files
+
+# Packaging (for PyInstaller)
+pyinstaller>=6.1.0
+
+# Additional utilities
+requests>=2.31.0
+
+#whataspp 
+pywhatkit>=5.3.0

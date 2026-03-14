@@ -1,0 +1,81 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# PyInstaller
+*.manifest
+*.spec.bak
+spec_backup/
+
+# ChromeDriver & WebDriver
+chromedriver
+chromedriver.exe
+geckodriver
+geckodriver.exe
+
+# WhatsApp Bot Profile
+AppData/Local/WhatsAppBot/
+.whatsapp_session
+
+# Application generated files
+*.log
+*.tmp
+config.json.backup
+config.json
+PyWhatKit_DB.txt
+
+# Customer/accounting exports (may contain PII)
+*.xlsx
+*.xls
+*.csv
+
+# OS specific
+.DS_Store
+Thumbs.db
+.Thumbs.db
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Temporary files
+*.bak
+*.temp
+~*
+.ruff_cache/
