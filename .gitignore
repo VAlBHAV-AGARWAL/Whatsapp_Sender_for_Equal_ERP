@@ -78,4 +78,10 @@ htmlcov/
 *.bak
 *.temp
 ~*
+
+
 .ruff_cache/
+browser-extension/dist/
+browser-extension/*.zip
+browser-extension/*.crx
+browser-extension/*.pem

@@ -225,10 +225,10 @@ class DataHandler:
     def _clean_phone_numbers(self, df):
         """
         Extract and validate phone numbers from PHONE and MOBILE columns.
-        Checks both columns and uses the one with valid 10-digit number.
-        Priority: MOBILE > PHONE (if both have valid numbers)
+        Creates PHONE_NUMBERS column with list of all valid phone numbers.
+        Both MOBILE and PHONE are checked and included if valid.
         
-        Creates PHONE_NUMBER column with full country code for valid 10-digit numbers.
+        Returns list of phone numbers with country code for valid 10-digit numbers.
         """
         def extract_10_digit_phone(phone_str):
             """Extract 10-digit phone number from string"""
@@ -248,31 +248,40 @@ class DataHandler:
             
             return None
         
-        def get_combined_phone(row):
+        def get_all_phones(row):
             """
-            Extract phone from MOBILE or PHONE column (whichever has valid 10-digit number)
-            Priority: Try MOBILE first, then PHONE
+            Extract all valid phone numbers from MOBILE and PHONE columns.
+            Returns list of phone numbers with country code.
             """
-            phone_num = None
+            phones = []
             
             # Try MOBILE column first
             if 'MOBILE' in row.index and pd.notna(row.get('MOBILE')):
-                phone_num = extract_10_digit_phone(row['MOBILE'])
+                mobile_num = extract_10_digit_phone(row['MOBILE'])
+                if mobile_num:
+                    phones.append(f"{self.country_code}{mobile_num}")
             
-            # If no valid number from MOBILE, try PHONE
-            if not phone_num and 'PHONE' in row.index and pd.notna(row.get('PHONE')):
+            # Try PHONE column second
+            if 'PHONE' in row.index and pd.notna(row.get('PHONE')):
                 phone_num = extract_10_digit_phone(row['PHONE'])
+                if phone_num:
+                    phone_with_code = f"{self.country_code}{phone_num}"
+                    # Only add if not already in list (avoid duplicates)
+                    if phone_with_code not in phones:
+                        phones.append(phone_with_code)
             
-            # Return with country code if valid
-            if phone_num:
-                return f"{self.country_code}{phone_num}"
-            
-            return None
+            return phones if phones else None
         
-        # Add combined PHONE_NUMBER column
-        df['PHONE_NUMBER'] = df.apply(get_combined_phone, axis=1)
+        # Add PHONE_NUMBERS column with list of all valid phones
+        df['PHONE_NUMBERS'] = df.apply(get_all_phones, axis=1)
         
-        logger.info(f"Phone numbers extracted: {df['PHONE_NUMBER'].notna().sum()} rows with valid 10-digit numbers")
+        # Keep backward compatibility - also create PHONE_NUMBER column with first phone
+        df['PHONE_NUMBER'] = df['PHONE_NUMBERS'].apply(lambda x: x[0] if x and len(x) > 0 else None)
+        
+        valid_phones = df['PHONE_NUMBERS'].notna().sum()
+        total_phone_numbers = df['PHONE_NUMBERS'].apply(lambda x: len(x) if x else 0).sum()
+        
+        logger.info(f"Phone numbers extracted: {valid_phones} rows with valid numbers, {total_phone_numbers} total phone numbers")
         
         return df
     

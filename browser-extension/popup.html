@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>equal erp whatsapp sender</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="app">
+      <header class="hero">
+        <p class="eyebrow">Surat, Gujarat Edition</p>
+        <h1>Equal ERP WhatsApp Sender</h1>
+        <p class="subtitle">Automated Collection Follow-up for Equal ERP</p>
+      </header>
+
+      <!-- stats bar -->
+      <section class="panel stats-bar">
+        <div class="stat">
+          <label>Total</label>
+          <strong id="statTotal">0</strong>
+        </div>
+        <div class="stat">
+          <label>Ready</label>
+          <strong id="statReady">0</strong>
+        </div>
+        <div class="stat">
+          <label>Sent / Skip</label>
+          <strong id="statProcessed">0 / 0</strong>
+        </div>
+      </section>
+
+      <!-- controls -->
+      <section class="panel">
+        <div class="row">
+          <label class="label">1. Upload Equal ERP Export</label>
+          <input id="csvFile" type="file" accept=".csv,.xlsx,.xls">
+        </div>
+        
+        <div class="row split">
+          <div>
+            <label class="label">Country Code</label>
+            <input id="countryCode" type="text" list="countryList" value="+91" placeholder="+91">
+            <datalist id="countryList">
+              <option value="+91">India (+91)</option>
+              <option value="+1">USA (+1)</option>
+              <option value="+44">UK (+44)</option>
+              <option value="+971">UAE (+971)</option>
+              <option value="+61">Australia (+61)</option>
+              <option value="+1">Canada (+1)</option>
+            </datalist>
+          </div>
+          <div>
+            <label class="label">Min Days Old</label>
+            <input id="minDays" type="number" min="0" value="0">
+          </div>
+        </div>
+
+        <div class="row split">
+          <div>
+            <label class="label">Min Delay (s)</label>
+            <input id="minDelay" type="number" min="5" value="18">
+          </div>
+          <div>
+            <label class="label">Max Delay (s)</label>
+            <input id="maxDelay" type="number" min="5" value="35">
+          </div>
+        </div>
+        
+        <div class="row toggle-row">
+          <label class="label">Spam Guard (Random Dots)</label>
+          <input id="spamGuard" type="checkbox" checked>
+        </div>
+      </section>
+
+      <!-- templates -->
+      <section class="panel">
+        <div class="template-header">
+          <label class="label">Message Template</label>
+          <select id="templatePicker">
+            <option value="1">Template 1</option>
+            <option value="2">Template 2</option>
+            <option value="3">Template 3</option>
+          </select>
+        </div>
+        <textarea id="messageTemplate" rows="4">Hi {name}, your total balance of Rs.{balance} for {billno} is pending for {days} days. Please pay soon.</textarea>
+        <div class="tags-helper">
+          <span class="tag-chip">{name}</span>
+          <span class="tag-chip">{billno}</span>
+          <span class="tag-chip">{bills}</span>
+          <span class="tag-chip">{days}</span>
+          <span class="tag-chip">{balance}</span>
+        </div>
+      </section>
+
+      <!-- listing tools -->
+      <section class="panel listing-tools">
+        <div class="search-row">
+          <input id="searchInput" type="text" placeholder="Search party name...">
+        </div>
+        <div class="bulk-actions">
+          <button id="addPartyBtn" class="secondary tiny">+ Add Party</button>
+          <button id="selectAllBtn" class="secondary tiny">All</button>
+          <button id="selectNoneBtn" class="secondary tiny">None</button>
+          <button id="failedOnlyBtn" class="secondary tiny">Show Failed</button>
+        </div>
+      </section>
+
+      <!-- preview listing -->
+      <div id="previewList" class="preview-list">
+        <div class="hint">Upload Equal ERP file to start</div>
+      </div>
+
+      <!-- actions -->
+      <section class="footer-actions">
+        <button id="startButton" class="primary">Start Campaign</button>
+        <button id="stopButton" class="secondary">Stop</button>
+      </section>
+
+      <section class="panel status-panel">
+        <div class="status-header">
+          <span id="statusBadge" class="status-badge">Idle</span>
+          <span id="statusText">Waiting...</span>
+        </div>
+      </section>
+
+      <!-- manual add modal -->
+      <div id="addModal" class="modal">
+        <div class="modal-content panel">
+          <h3>Add Manual Party</h3>
+          <div class="row">
+            <label class="label">Party Name</label>
+            <input id="newPartyName" type="text">
+          </div>
+          <div class="row">
+            <label class="label">Phone Number</label>
+            <input id="newPartyPhone" type="text">
+          </div>
+          <div class="row">
+            <label class="label">Balance Amount</label>
+            <input id="newPartyBalance" type="text">
+          </div>
+          <div class="modal-actions">
+            <button id="cancelAddBtn" class="secondary">Cancel</button>
+            <button id="confirmAddBtn" class="primary">Add</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="popup-app.js"></script>
+  </body>
+</html>
